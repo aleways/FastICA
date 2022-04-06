@@ -25,7 +25,7 @@ MAX = 100;    % Massimo numero iterazioni
 % dati centrati e sbiancati
 [xc] = centering(x);
 [xcw] = whitening(xc);
-[xrow, ~]=size(x);
+[xrow, xcol]=size(x);
 % Fast ICA
 
 W=zeros(n,xrow);
@@ -48,7 +48,9 @@ for t=1:xrow
         Gs = (1 - u.^2) .* exp(-0.5 * u.^2); % 1x1001
 
         %calcolo il nuovo vettore Wp
-        Wp = mean(xcw * Gp') - mean(Gs)*Wp;
+        %Wp = mean(xcw * Gp') - mean(Gs)*Wp;
+        Wp = (1/xcol).*(xcw * Gp') - ((1/xcol).*(Gs))*(ones(xcol,1))*Wp; %2x1
+        
         
         % Decorrelazione
         W_sum=zeros(n,1);
