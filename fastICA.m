@@ -45,7 +45,7 @@ for t=1:xrow
 
         % Definisco la prima e la seconda derivata della funzione G
         Gp = u .* exp(-0.5 * u.^2); % 1 x 1001
-        Gs = (1 - u.^2) .* exp(-0.5 * u.^2); % 1x1001
+        Gs = (ones(1,xcol) - u.^2) .* exp(-0.5 * u.^2); % 1x1001
 
         %calcolo il nuovo vettore Wp
         %Wp = mean(xcw * Gp') - mean(Gs)*Wp;
@@ -58,13 +58,8 @@ for t=1:xrow
             W_sum = W_sum + (Wp'*W(:,int))*W(:,int);
         end
         Wp = Wp - W_sum;
-
         Wp = Wp/norm(Wp);
-
-        % Decorrelazione (alternativa)
-        % [F,D] = eig(W*W');
-        % W=(F*(D^(-1/2))*F')*W;
-
+        
         % Aggiornamento variabile di convergenza
         delta = max(1 - abs(dot(Wlast,Wp,2)));
 
@@ -73,4 +68,4 @@ for t=1:xrow
     W(:,t) = Wp;
 
 end
-s = W*xcw;
+s = W'*xcw;
