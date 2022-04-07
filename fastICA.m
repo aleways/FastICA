@@ -24,7 +24,7 @@ MAX = 100;    % Massimo numero iterazioni
 
 % dati centrati e sbiancati
 [xc] = centering(x);
-[xcw] = whitening(xc);
+[xcw , H] = whitening(xc);
 [xrow, xcol]=size(x);
 % Fast ICA
 
@@ -66,6 +66,7 @@ for t=1:xrow
     end
 
     W(:,t) = Wp;
-
+    
 end
-s = W'*xcw;
+% s = W'*xcw;
+s = W'*H*x;
