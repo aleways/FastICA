@@ -1,4 +1,4 @@
-function [xs] = whitening(x)
+function [xs , H] = whitening(x)
 %
 % Inputs:           vettore colonna x (d,1)
 %
@@ -26,4 +26,4 @@ C = cov(x',1);
 
 D = D^(-(1/2));
 xs=E*D*E'*x;
-
+H = E*D*E';
