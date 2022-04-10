@@ -25,5 +25,5 @@ C = cov(x',1);
 [E,D] = eig(C);
 
 D = D^(-(1/2));
-xs=E*D*E'*x;
-H = E*D*E';
+xs=D*E'*x;
+H = D*E';
